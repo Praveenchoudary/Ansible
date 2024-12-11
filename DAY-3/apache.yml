@@ -1,0 +1,21 @@
+---
+- hosts: all 
+  connection: ssh 
+  become: true
+
+  tasks:
+   - name: Install apache2 
+     ansible.builtin.apt:
+      name: apache2
+      state: present
+   - name: Start service apache2
+     ansible.builtin.service:
+      name: apache2
+      state: started
+   - name: Copy file with owner and permissions
+     ansible.builtin.copy:
+      src:  index.html
+      dest: /var/www/html
+      owner: root
+      group: root
+      mode: '0644'
